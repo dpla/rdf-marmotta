@@ -49,6 +49,12 @@ module RDF
       query_client.construct([:s, :p, :o]).where([:s, :p, :o]).each_statement(&block)
     end
 
+    # @see RDF::Mixin::Queryable#query_pattern
+    def query_pattern(pattern, options = {}, &block)
+      match = [pattern.subject || :s, pattern.predicate || :p, pattern.object || :o]
+      query_client.construct(match).where(match).each_statement(&block)
+    end
+
     # @see RDF::Mutable#insert_statement
     def insert_statement(statement)
       insert_statements([statement])
